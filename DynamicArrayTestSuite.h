@@ -7,9 +7,6 @@
 class DynamicArrayTestSuite: public SequentialTestSuite<DynamicArray>
 {
     public:
-    static void testExplicitConstructor();
-    static void testDefaultConstructor();
-    static void testDestructor();
     DynamicArrayTestSuite();
 };
 

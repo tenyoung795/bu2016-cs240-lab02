@@ -3,11 +3,12 @@
 CC = g++
 STD = c++0x
 OPTIONS = -std=$(STD) -Wall -g
+LIBRARIES = -lassert
 OBJECTS = Driver.o DynamicArray.o DynamicArrayTestSuite.o
 OUTPUT = lab02
 
 all: $(OBJECTS)
-	$(CC) $(OPTIONS) -o $(OUTPUT) $(OBJECTS)
+	$(CC) $(OPTIONS) -o $(OUTPUT) $(OBJECTS) $(LIBRARIES)
 
 Driver.o: Driver.cpp DynamicArrayTestSuite.h
 	$(CC) $(OPTIONS) -c Driver.cpp
