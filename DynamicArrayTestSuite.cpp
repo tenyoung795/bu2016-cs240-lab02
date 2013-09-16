@@ -40,7 +40,11 @@ DynamicArrayTestSuite::DynamicArrayTestSuite(): ConcurrentTestSuite
         auto arr = DynamicArray(SIZE, FILL);
         assertEquals(int, SIZE, arr.size());
         assertTrue(arr.capacity() >= SIZE);
-        assertEquals(int, 0, arr.search(FILL));
+        for (int i = 0; i < SIZE; i++)
+        {
+            assertEquals(int, 0, arr.search(FILL));
+            arr.pop_back();
+        }
     }}
 }) {}
 
