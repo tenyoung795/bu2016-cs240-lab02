@@ -8,28 +8,26 @@
 
 using namespace std;
 
-static int checkCapacity(int capacity)
+static Element *initArray(int size, Element e)
 {
-    if (capacity < 0) throw invalid_argument("Capacity " + to_string(capacity) + " cannot be negative");
-    return capacity;
+    if (size < 0) throw invalid_argument("Size " + to_string(size) + " cannot be negative");
+
+    Element *arr = new Element[size];
+    for (int i = 0; i < size; i++)
+    {
+        arr[i] = e;
+    }
+    return arr;
 }
 
-DynamicArray::DynamicArray(int capacity, Element e):
-    dynamicArray(new Element[checkCapacity(capacity)]), arraySize(0), arrayCapacity(capacity)
-{
-    for (int i = 0; i < capacity; i++)
-    {
-        dynamicArray[i] = e;
-    }
-}
+DynamicArray::DynamicArray(int size, Element e):
+    dynamicArray(initArray(size, e)), arraySize(size), arrayCapacity(size) {}
 
 DynamicArray::DynamicArray(): dynamicArray(nullptr), arraySize(0), arrayCapacity(0) {}
 
 DynamicArray::~DynamicArray()
 {
     delete[] dynamicArray;
-    dynamicArray = nullptr;
-    arraySize = arrayCapacity = 0;
 }
 
 void DynamicArray::push_back(Element e)
