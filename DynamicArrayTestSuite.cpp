@@ -4,7 +4,7 @@
 #include <Assert.h>
 #include <string>
 
-DynamicArrayTestSuite::DynamicArrayTestSuite(): SequentialTestSuite
+DynamicArrayTestSuite::DynamicArrayTestSuite(): ConcurrentTestSuite
 ({
     {"testDefaultConstructor", []()
 	{

@@ -3,7 +3,7 @@
 CC = g++
 STD = c++0x
 OPTIONS = -std=$(STD) -Wall -g
-LIBRARIES = -lassert
+LIBRARIES = -pthread -lassert
 OBJECTS = Driver.o DynamicArray.o DynamicArrayTestSuite.o
 OUTPUT = lab02
 
