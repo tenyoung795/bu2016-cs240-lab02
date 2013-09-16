@@ -5,6 +5,7 @@
 #include <string>
 #include <stdexcept>
 #include <iostream>
+#include <new>
 
 using namespace std;
 
@@ -34,11 +35,67 @@ DynamicArray::~DynamicArray()
 
 void DynamicArray::push_back(Element e)
 {
+    if (arrayCapacity == INT_MAX)
+    {
+        throw length_error("At max capacity " + to_string(INT_MAX));
+    }
+
+    if (arraySize == arrayCapacity)
+    {
+        int newCapacity = max(arrayCapacity * 2, INT_MAX);
+        Element *newArr = nullptr;
+        // if the doubling/INT_MAX policy doesn't work, we can narrow out the best interval via binary search
+        // (a + b) / 2 = (2a + (b - a)) / 2 = a + (b - a) / 2
+        for (; newArr != nullptr && newCapacity < arrayCapacity + 1;
+            newCapacity -= newCapacity + (arrayCapacity + 1 - newCapacity) / 2)
+        {
+            newArr = new(nothrow) Element[newCapacity];
+        }
+        // if we can't grow by at least one, THEN we're screwed
+        if (newArr == nullptr)
+        {
+            newCapacity = arrayCapacity + 1;
+            newArr = new Element[newCapacity];
+        }
+
+        for (int i = 0; i < arraySize; i++)
+        {
+            newArr[i] = dynamicArray[i];
+        }        
+        delete[] dynamicArray;
+        dynamicArray = newArr;
+        arrayCapacity = newCapacity;
+    }
+    
+    dynamicArray[arraySize] = e; // oldSize = newSize - 1
+    arraySize++;
 }
 
 Element DynamicArray::pop_back()
 {
-	return NAN;
+    if (arraySize == 0)
+    {
+        throw out_of_range("Cannot pop from empty array");
+    }
+    
+    int possiblyNewCapacity = arrayCapacity / 2;
+    if (arraySize <= possiblyNewCapacity)   
+    {
+        auto newArr = new(nothrow) Element[possiblyNewCapacity];
+        if (newArr != nullptr)
+        {
+            for (int i = 0; i < arraySize; i++)
+            {
+                newArr[i] = dynamicArray[i];
+            }
+            delete[] dynamicArray;
+            dynamicArray = newArr;
+            arrayCapacity = possiblyNewCapacity;
+        }
+    }
+    
+    arraySize--;
+    return dynamicArray[arraySize]; // newSize = oldSize - 1
 }
 
 int DynamicArray::search(Element e)
