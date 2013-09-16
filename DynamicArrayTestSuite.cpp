@@ -26,18 +26,21 @@ DynamicArrayTestSuite::DynamicArrayTestSuite(): ConcurrentTestSuite
 
     {"testExplicitConstructorEmpty", []()
     {
-        auto explicitlyEmpty = DynamicArray(0, 0);
+        static constexpr Element FILL = 1;
+        auto explicitlyEmpty = DynamicArray(0, FILL);
         assertEquals(int, 0, explicitlyEmpty.size());
         assertTrue(explicitlyEmpty.capacity() >= 0);
+        assertEquals(int, -1, explicitlyEmpty.search(FILL));
     }},
 
     {"testExplicitConstructor", []()
     {
+        static constexpr Element FILL = 1;
         static constexpr int SIZE = 16;
-        auto arr = DynamicArray(SIZE, 0);
+        auto arr = DynamicArray(SIZE, FILL);
         assertEquals(int, SIZE, arr.size());
         assertTrue(arr.capacity() >= SIZE);
+        assertEquals(int, 0, arr.search(FILL));
     }}
 }) {}
-
 
