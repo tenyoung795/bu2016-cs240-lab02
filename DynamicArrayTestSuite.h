@@ -4,7 +4,7 @@
 #include <Assert.h>
 #include "DynamicArray.h"
 
-class DynamicArrayTestSuite: public SequentialTestSuite<>
+class DynamicArrayTestSuite: public ConcurrentTestSuite<>
 {
     public:
     DynamicArrayTestSuite();
