@@ -17,7 +17,7 @@ DynamicArrayTestSuite::DynamicArrayTestSuite(): ConcurrentTestSuite
     {
         try
         {
-            auto invalidArr = DynamicArray(-1, 0);
+            DynamicArray(-1, 0);
             fail("Expected an invalid_argument exception for negative capacity");
         }
         // expected to catch exception
@@ -45,6 +45,30 @@ DynamicArrayTestSuite::DynamicArrayTestSuite(): ConcurrentTestSuite
             assertEquals(int, 0, arr.search(FILL));
             arr.pop_back();
         }
+    }},
+
+    {"testMutation", []()
+    {
+        DynamicArray arr;
+        try
+        {
+            arr.pop_back();
+            fail("Expected an exception on popping from an empty array");
+        }
+        // expect out of range
+        catch (out_of_range &e) {}
+
+        static constexpr Element ELEMENT = 1;
+
+        arr.push_back(ELEMENT);
+        assertEquals(int, 1, arr.size());
+        assertTrue(arr.capacity() >= 1);
+        assertEquals(int, 0, arr.search(ELEMENT));
+        
+        assertEquals(float, ELEMENT, arr.pop_back());
+        assertEquals(int, 0, arr.size());
+        assertTrue(arr.capacity() >= 1);
+        assertEquals(int, -1, arr.search(ELEMENT));
     }}
 }) {}
 

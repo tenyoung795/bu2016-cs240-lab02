@@ -37,10 +37,9 @@ void DynamicArray::push_back(Element e)
     {
         throw length_error("At max capacity " + to_string(INT_MAX));
     }
-
     if (arraySize == arrayCapacity)
     {
-        int newCapacity = max(arrayCapacity * 2, INT_MAX);
+        int newCapacity = min(max(arrayCapacity * 2, 1), INT_MAX);
         Element *newArr = nullptr;
         // if the doubling/INT_MAX policy doesn't work, we can narrow out the best interval via binary search
         // (a + b) / 2 = (2a + (b - a)) / 2 = a + (b - a) / 2
