@@ -41,7 +41,11 @@ Element DynamicArray::pop_back()
 
 int DynamicArray::search(Element e)
 {
-	return -1;
+    for (int i = 0; i < arraySize; i++)
+    {
+        if (dynamicArray[i] == e) return i;
+    }
+    return -1;
 }
 
 bool DynamicArray::valid_index(int index)
