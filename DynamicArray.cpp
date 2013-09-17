@@ -106,7 +106,7 @@ int DynamicArray::search(Element e)
 
 bool DynamicArray::valid_index(int index)
 {
-	return false;
+    return 0 <= index && index < arraySize;
 }
 
 int DynamicArray::size()
